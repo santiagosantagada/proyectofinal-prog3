@@ -13,9 +13,20 @@ export default class Posts extends Component {
     }
 
     componentDidMount() {
-        if (this.props.item.data.likes.includes(auth.currentUser.email)) {
-            this.setState({ estaMiLike: true });
-        }
+        const { item } = this.props;
+        const emaill = auth.currentUser.email;
+        db.collection('posteos')
+            .doc(item.id)
+            .get()
+            .then(doc => {
+                const postData = doc.data();
+                if (postData.likes && postData.likes.includes(emaill)) {
+                    this.setState({ estaMiLike: true });
+                }
+            })
+            .catch(error => {
+                console.error("error verificando el like ", error);
+            });
     }
 
     darLike() {
@@ -65,49 +76,51 @@ export default class Posts extends Component {
     }
 } 
 
-    const styles = StyleSheet.create({
-        postContainer: {
-            backgroundColor: '#fff',
-            borderRadius: 10,
-            padding: 15,
-            margin: 10,
-            shadowColor: '#000',
-            shadowOpacity: 0.2,
-            shadowOffset: { width: 0, height: 1 },
-            shadowRadius: 3,
-        },
-        email: {
-            fontWeight: 'bold',
-            fontSize: 16,
-            color: '#333',
-            marginBottom: 5,
-        },
-        postText: {
-            fontSize: 14,
-            color: '#555',
-            marginBottom: 10,
-        },
-        likes: {
-            fontSize: 14,
-            color: '#999',
-            marginBottom: 10,
-        },
-        likeButton: {
-            backgroundColor: '#6200ee',
-            paddingVertical: 8,
-            paddingHorizontal: 12,
-            borderRadius: 5,
-            alignSelf: 'flex-start',
-        },
-        likeButtonText: {
-            color: '#fff',
-            fontSize: 14,
-        },
-        likedButton: {
-            backgroundColor: 'grey',
-        },
-        likedButtonText: {
-            color: '#000'
-        },
-    });
+const styles = StyleSheet.create({
+    postContainer: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 15,
+        margin: 10,
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 1 },
+        shadowRadius: 3,
+    },
+    email: {
+        fontWeight: '400', 
+        fontSize: 14,
+        color: '#7f8c8d', 
+        marginBottom: 5,
+    },
+    postText: {
+        fontSize: 18, 
+        fontWeight: 'bold', 
+        color: '#2c3e50', 
+        marginBottom: 10,
+    },
+    likes: {
+        fontSize: 14,
+        color: '#95a5a6',
+        marginBottom: 10,
+    },
+    likeButton: {
+        backgroundColor: '#6200ee',
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 5,
+        alignSelf: 'flex-start',
+    },
+    likeButtonText: {
+        color: '#fff',
+        fontSize: 14,
+    },
+    likedButton: {
+        backgroundColor: 'grey',
+    },
+    likedButtonText: {
+        color: '#000',
+    },
+});
+
     

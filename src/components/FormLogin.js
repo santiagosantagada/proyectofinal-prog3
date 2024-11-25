@@ -28,12 +28,7 @@ export default class FormularioLogin extends Component {
            .signInWithEmailAndPassword(this.state.email, this.state.password)
            .then(() => this.props.navigation.navigate('anidada'))
            .catch(err => {
-               if (err.code === "auth/user-not-found") {
-                   this.setState({ error: 'Usuario no encontrado' });
-               }
-               if (err.code === "auth/wrong-password") {
-                   this.setState({ error: 'Contraseña incorrecta' });
-               }
+               this.setState({error: "Email o contraseña no encontrados :("})
            });
    }
 

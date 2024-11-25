@@ -43,12 +43,14 @@ export default class FormularioLogin extends Component {
                <TextInput
                    style={styles.input}
                    placeholder='Email'
+                   keyboardType='email'
                    onChangeText={(email) => this.setState({ email })}
                    value={this.state.email}
                />
                <TextInput
                    style={styles.input}
                    placeholder='Password'
+                   keyboardType='default'
                    onChangeText={(password) => this.setState({ password })}
                    value={this.state.password}
                    secureTextEntry
